@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tab Volume Mixer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <h1 data-i18n="extName">Tab Volume Mixer</h1>
+    <span id="count" class="count" aria-live="polite"></span>
+  </header>
+
+  <main>
+    <ul id="list" class="list" aria-labelledby="listLabel"></ul>
+    <p id="listLabel" class="sr-only" data-i18n="listLabel">Tabs with sound</p>
+
+    <section id="empty" class="empty" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" opacity=".35"/><path d="M17 9l4 6M21 9l-4 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg>
+      <p class="empty-title" data-i18n="emptyTitle">No tab is playing sound right now</p>
+      <p class="empty-hint" data-i18n="emptyHint">Start playback in any tab – it will appear here automatically.</p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <template id="rowTpl">
+    <li class="row">
+      <div class="head">
+        <img class="favicon" alt="" width="16" height="16">
+        <button class="title" type="button"></button>
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+      <div class="controls">
+        <button class="mute" type="button" aria-pressed="false">
+          <svg class="ico-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg class="ico-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <input class="slider" type="range" min="0" max="100" step="1" value="100">
+        <output class="value">100%</output>
+        <button class="reset" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12a7 7 0 1 0 2.1-5M5 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <p class="hint" hidden></p>
+    </li>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "name": "Tab Volume Mixer",
+  "mode": "local",
+  "created_at": "2026-11-19T13:22:50.829290+00:00",
+  "graph": {
+    "research": [],
+    "architecture": [
+      "research"
+    ],
+    "design": [
+      "architecture"
+    ],
+    "build": [
+      "design"
+    ],
+    "test": [
+      "build"
+    ],
+    "release": [
+      "test"
+    ]
+  },
+  "stages": {
+    "research": {
+      "status": "evidenced",
+      "evidence": "research/research.md",
+      "sha256": "4c07d376f44d957e047dc3eef159609bced0f24755c8b4c535ec11e660fa1a44",
+      "recorded_at": "2026-11-19T13:43:30.824162+00:00"
+    },
+    "architecture": {
+      "status": "evidenced",
+      "evidence": "architecture/architecture.md",
+      "sha256": "1b3a19f473f46b3020160530bb0dbeb79f5ce23fd7dcf8ac49c8ffc78616bf62",
+      "recorded_at": "2026-11-19T13:43:31.078347+00:00"
+    },
+    "design": {
+      "status": "evidenced",
+      "evidence": "design/design-spec.md",
+      "sha256": "9f6d93625484e70475938199335be39f2df5e6f3054912d8d1125c3e6b0540eb",
+      "recorded_at": "2026-11-19T13:43:31.335998+00:00"
+    },
+    "build": {
+      "status": "evidenced",
+      "evidence": "extension/manifest.json",
+      "sha256": "52526130179cb5959d74a97996b5591d2e885e142292e9c6aa8374f526bcc0eb",
+      "recorded_at": "2026-11-19T14:52:24.702193+00:00"
+    },
+    "test": {
+      "status": "evidenced",
+      "evidence": "quality/test-report.md",
+      "sha256": "9b42333df5724c44d94b20a0d229b48d733db05c0220d0fcdf1cd21571dffdaf",
+      "recorded_at": "2026-11-19T14:52:24.958809+00:00"
+    },
+    "release": {
+      "status": "evidenced",
+      "evidence": "release/tab-volume-mixer-1.0.0.zip",
+      "sha256": "5d325a9e6d64a38f9c4b4bf8035d6ff9a54ff93d0dc717e1b2f1ba47ad7698ca",
+      "recorded_at": "2026-11-19T14:52:25.217840+00:00"
+    }
+  },
+  "history": [
+    {
+      "action": "invalidate",
+      "stage": "build",
+      "reason": "Security pass: homepage_url added, MAIN listener hardened, store icon padding",
+      "previous": {
+        "build": {
+          "status": "evidenced",
+          "evidence": "extension/manifest.json",
+          "sha256": "4d09d24de7d641c9aef380caca758a8c9a8c29a8d81a9dd29225b4c419d0ca37",
+          "recorded_at": "2026-11-19T13:43:31.594613+00:00"
+        },
+        "test": {
+          "status": "evidenced",
+          "evidence": "quality/test-report.md",
+          "sha256": "2f4f01100d68905e1926bb53ac1620f8398c21ef5147928c72f591ee6936b702",
+          "recorded_at": "2026-11-19T13:43:31.853268+00:00"
+        },
+        "release": {
+          "status": "evidenced",
+          "evidence": "release/tab-volume-mixer-1.0.0.zip",
+          "sha256": "15aa8c896ed7d051aa49a3ad291717276f4b2bc821706143439ec980f4191b1d",
+          "recorded_at": "2026-11-19T13:43:32.107543+00:00"
+        }
+      },
+      "recorded_at": "2026-11-19T14:52:24.446738+00:00"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-19T14:50:09.492Z",
+  "browser": "Chrome/147.0.7727.137",
+  "headless": false,
+  "results": [
+    {
+      "name": "extension loaded, service worker running",
+      "ok": true,
+      "detail": "lejmbhlnahbknoblkiaamcgbflfcgmhk"
+    },
+    {
+      "name": "Web Audio connect() keeps native return value",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J1 precondition: media tab is audible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J1 precondition: Web Audio tab is audible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J1 popup lists both audible tabs",
+      "ok": true,
+      "detail": "Fixture media tab | Fixture Web Audio tab"
+    },
+    {
+      "name": "J1 popup hides the silent tab",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 media element real volume = 0.30",
+      "ok": true,
+      "detail": "0.3"
+    },
+    {
+      "name": "J2 page still sees its own volume 1.0",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 page sets 0.5 → real 0.15 (multiplicative)",
+      "ok": true,
+      "detail": "0.15"
+    },
+    {
+      "name": "J2 page getter returns 0.5",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 popup shows value",
+      "ok": true,
+      "detail": "30%"
+    },
+    {
+      "name": "J2 media tab at 0% becomes inaudible (browser audio monitor)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 Web Audio tab still audible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 Web Audio tab at 0% becomes inaudible (GainNode path)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J2 Web Audio tab back to 100% is audible again",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J5 inaudible tab with level ≠ 100% stays in list",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J3 level survives reload (real volume 0.40)",
+      "ok": true,
+      "detail": "0.4"
+    },
+    {
+      "name": "J3 badge shows level on that tab",
+      "ok": true,
+      "detail": "40"
+    },
+    {
+      "name": "J4 mute button mutes tab",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "J4 mute state reflected (aria-pressed=true)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "UI reset button visible only when level ≠ 100%",
+      "ok": true,
+      "detail": "[[\"40%\",true],[\"100%\",false]]"
+    },
+    {
+      "name": "Security: page MAIN world has no extension messaging",
+      "ok": true,
+      "detail": "no-runtime"
+    },
+    {
+      "name": "Security: out-of-range level rejected",
+      "ok": true,
+      "detail": "{\"ok\":false,\"error\":\"invalid\"}"
+    },
+    {
+      "name": "J6 restricted page refused with reason",
+      "ok": true,
+      "detail": "{\"ok\":false,\"error\":\"restricted\"}"
+    },
+    {
+      "name": "J6 restricted tab listed with disabled slider + hint",
+      "ok": true,
+      "detail": "{\"title\":\"System page\",\"hint\":true}"
+    },
+    {
+      "name": "J7 controls have accessible names",
+      "ok": true,
+      "detail": "{\"slider\":\"Volume: Fixture media tab\",\"valuetext\":\"40%\",\"mute\":\"Mute: Fixture media tab\"}"
+    },
+    {
+      "name": "J7 arrow key changes slider",
+      "ok": true,
+      "detail": "40 → 39"
+    },
+    {
+      "name": "Lifecycle: closed tab level removed from session storage",
+      "ok": true,
+      "detail": "{}"
+    },
+    {
+      "name": "Lifecycle: after extension reload, open tab is re-injected and set to 0.25",
+      "ok": true,
+      "detail": "{\"ok\":true} real=0.25"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "extName": { "message": "Tab Volume Mixer" },
+  "extDescription": { "message": "Set the volume of every tab that plays sound separately – a per-tab mixer with sliders." },
+  "actionTitle": { "message": "Tab volume mixer" },
+  "listLabel": { "message": "Tabs with sound" },
+  "emptyTitle": { "message": "No tab is playing sound right now" },
+  "emptyHint": { "message": "Start playback in any tab – it will appear here automatically." },
+  "playingCount": { "message": "$1 playing", "placeholders": { "n": { "content": "$1" } } },
+  "systemPage": { "message": "System page" },
+  "goToTab": { "message": "Go to tab: $1", "placeholders": { "t": { "content": "$1" } } },
+  "volumeLabel": { "message": "Volume: $1", "placeholders": { "t": { "content": "$1" } } },
+  "muteLabel": { "message": "Mute: $1", "placeholders": { "t": { "content": "$1" } } },
+  "unmuteLabel": { "message": "Unmute: $1", "placeholders": { "t": { "content": "$1" } } },
+  "resetLabel": { "message": "Reset to 100%: $1", "placeholders": { "t": { "content": "$1" } } },
+  "restrictedHint": { "message": "The browser doesn't allow extensions on this page – only mute is available." },
+  "applyFailed": { "message": "Couldn't change the volume on this page. Try reloading the tab." }
+}

@@ -1,0 +1,17 @@
+{
+  "extName": { "message": "Mikser głośności kart" },
+  "extDescription": { "message": "Ustawiaj głośność każdej karty odtwarzającej dźwięk osobno – mikser z suwakami dla poszczególnych kart." },
+  "actionTitle": { "message": "Mikser głośności kart" },
+  "listLabel": { "message": "Karty z dźwiękiem" },
+  "emptyTitle": { "message": "Żadna karta nie odtwarza teraz dźwięku" },
+  "emptyHint": { "message": "Uruchom odtwarzanie w dowolnej karcie – pojawi się tu automatycznie." },
+  "playingCount": { "message": "Gra: $1", "placeholders": { "n": { "content": "$1" } } },
+  "systemPage": { "message": "Strona systemowa" },
+  "goToTab": { "message": "Przejdź do karty: $1", "placeholders": { "t": { "content": "$1" } } },
+  "volumeLabel": { "message": "Głośność: $1", "placeholders": { "t": { "content": "$1" } } },
+  "muteLabel": { "message": "Wycisz: $1", "placeholders": { "t": { "content": "$1" } } },
+  "unmuteLabel": { "message": "Wyłącz wyciszenie: $1", "placeholders": { "t": { "content": "$1" } } },
+  "resetLabel": { "message": "Przywróć 100%: $1", "placeholders": { "t": { "content": "$1" } } },
+  "restrictedHint": { "message": "Przeglądarka nie pozwala rozszerzeniom działać na tej stronie – dostępne jest tylko wyciszenie." },
+  "applyFailed": { "message": "Nie udało się zmienić głośności na tej stronie. Spróbuj przeładować kartę." }
+}
