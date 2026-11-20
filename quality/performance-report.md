@@ -1,4 +1,4 @@
-# Performance — Tab Volume Mixer 1.0.0
+# Performance — Tab Volume Mixer 1.0.1
 
 Role: performance-engineer (run serially by the orchestrator).
 

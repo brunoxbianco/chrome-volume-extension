@@ -8,8 +8,10 @@ MV3 browser extension for **Helium** (Chromium-based; also works in Chrome/Edge/
 It sets the volume of each tab separately: the popup lists every tab that plays sound, and each tab gets a slider (0–100 %), a mute button, a reset to 100 % and a click-to-go-to-tab action.
 Local only: no backend, no network, no accounts.
 
-Status (2026-11-19): **v1.0.0 done**. E2E 29/29 passing in real Helium 147, security review done, Chrome Web Store
-materials ready. **Not submitted to the Web Store yet** (needs the user's developer account).
+Status (2026-11-20): **v1.0.1 done**. E2E 36/36 and the live-site check (YouTube, YouTube/Spotify/SoundCloud embeds,
+Web Audio site, WebRTC loopback) pass in Helium 157. 1.0.1 fixed double attenuation of Web Audio-routed media and
+the popup layout blow-out with long titles. Security review done, Chrome Web Store materials ready.
+**Not submitted to the Web Store yet** (needs the user's developer account).
 
 ## Layout
 | Path | What |
@@ -39,6 +41,8 @@ materials ready. **Not submitted to the Web Store yet** (needs the user's develo
 ```powershell
 # E2E (opens an off-screen Helium window; fixtures are ~-55 dBFS, practically silent)
 cd tests; npm install; node e2e.mjs
+# Live sites (network; test tabs are muted, so it's silent). Optional: --only=youtube,spotify
+node live-sites.mjs
 # Store screenshots / promo tile
 node tests/store-assets.mjs
 # Icons
@@ -52,15 +56,20 @@ Override the browser path with env `BROWSER` (default: `%LOCALAPPDATA%\imput\Hel
 * The popup can't be opened by automation; tests open `chrome-extension://<id>/popup/popup.html` in a tab, which is why sender validation is origin-based.
 * CSS `display:` on an element overrides the `hidden` attribute; there is a global `[hidden]{display:none!important}` rule.
 * Windows: `python3`/`python` may be the Microsoft Store alias. Use `py -3`. The plugin CLI (`extension_builder.mjs`) spawns `python3`, so run its Python scripts directly with `py -3 <plugin>/skills/chrome-extension-builder/scripts/<script>.py`.
+* A tab muted with `chrome.tabs.update({muted:true})` still reports `tab.audible`, so live tests mute their tabs instead of using `--mute-audio`. WebRTC remote audio (`<audio srcObject>`) is never reported as audible, so measure element volume there.
+* Chromium applies `element.volume` **before** a `MediaElementAudioSourceNode`. Elements routed into Web Audio must not be scaled directly (the GainNode already does it), otherwise the level applies twice.
+* Helium 157: `chrome.runtime.reload()` does not bring back a CDP-loaded unpacked extension, and the restarted worker keeps its target ID. The E2E simulates an update with `browser.uninstallExtension` + `installExtension`.
+* Vimeo's player never gets past `readyState` 1 in automated Helium, with or without the extension. The live test skips it.
+* Popup layout: the list is a CSS grid. Keep `grid-template-columns: minmax(0, 1fr)`, or long nowrap titles widen the popup.
 * Git push: HTTPS credentials on the desktop failed; the remote uses **SSH** (`git@github.com:brunoxbianco/chrome-volume-extension.git`).
 
 ## Release workflow
 1. Change code → run `node tests/e2e.mjs` (must be all PASS).
 2. Bump `version` in `extension/manifest.json`.
-3. Zip `extension/` contents (manifest at the zip root) into `release/tab-volume-mixer-<version>.zip`. The plugin's `package_extension.py` does this and validates it.
+3. Zip `extension/` contents (manifest at the zip root) into `release/tab-volume-mixer-<version>.zip`. The plugin's `package_extension.py` does this and validates it (if the plugin isn't installed, a short `py -3` zipfile script does the same).
 4. Update `quality/test-report.md`, plus `quality/security-review.md` if permissions or messaging changed.
 
 ## Open items / ideas
 * Web Store submission (user action): follow `release/store-submission.md`.
-* Not yet tested on live sites (YouTube, Spotify, Meet), in cross-origin iframes, or with `file://` pages.
+* Not yet tested: signed-in Google Meet and the Spotify web player (need the user's account; do it manually), Vimeo (environment), `file://` pages.
 * Possible features: remember levels per site (would need `storage.local` + a privacy update), keyboard shortcuts, optional >100 % boost via `tabCapture` for the active tab only.

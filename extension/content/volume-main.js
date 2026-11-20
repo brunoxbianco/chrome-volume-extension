@@ -17,6 +17,10 @@
   const nativeSet = volumeDesc.set;
   const desired = new WeakMap(); // element -> volume the page asked for
   const known = new Set(); // WeakRef<HTMLMediaElement>
+  // Elements routed into an AudioContext via MediaElementAudioSourceNode. Chromium applies the element's
+  // volume before the graph, and the graph already goes through our GainNode, so scaling the element too
+  // would apply the level twice (50 % → 25 %). These elements keep the page's volume; the GainNode scales.
+  const routed = new WeakSet();
 
   const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
@@ -29,7 +33,7 @@
 
   function applyTo(el) {
     track(el);
-    const target = clamp01(desired.get(el) * level);
+    const target = routed.has(el) ? desired.get(el) : clamp01(desired.get(el) * level);
     if (Math.abs(nativeGet.call(el) - target) > 1e-4) nativeSet.call(el, target);
   }
 
@@ -110,6 +114,37 @@
       }
       return nativeDisconnect.call(this, ...(arguments.length ? [target, ...rest] : []));
     };
+  }
+
+  function markRouted(ctx, el) {
+    if (!(ctx instanceof NativeAudioContext) || !(el instanceof HTMLMediaElement)) return;
+    try {
+      routed.add(el);
+      applyTo(el); // undo any element-level scaling already applied
+    } catch { /* never break the page's graph */ }
+  }
+
+  if (NativeAudioContext) {
+    const ctxProto = NativeAudioContext.prototype;
+    const nativeCreateMES = ctxProto.createMediaElementSource;
+    if (nativeCreateMES) {
+      ctxProto.createMediaElementSource = function createMediaElementSource(el) {
+        const node = nativeCreateMES.call(this, el); // throws natively on bad input / reuse
+        markRouted(this, el);
+        return node;
+      };
+    }
+    // Constructor form: new MediaElementAudioSourceNode(ctx, { mediaElement }).
+    // A Proxy keeps instanceof, prototype and static behaviour of the native constructor.
+    if (window.MediaElementAudioSourceNode) {
+      window.MediaElementAudioSourceNode = new Proxy(window.MediaElementAudioSourceNode, {
+        construct(target, args, newTarget) {
+          const node = Reflect.construct(target, args, newTarget);
+          markRouted(args[0], args[1] && args[1].mediaElement);
+          return node;
+        }
+      });
+    }
   }
 
   function applyAllAudio() {

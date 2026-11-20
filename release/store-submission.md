@@ -1,4 +1,4 @@
-# Chrome Web Store submission sheet — Tab Volume Mixer 1.0.0
+# Chrome Web Store submission sheet — Tab Volume Mixer 1.0.1
 
 Requirements were checked against the official pages on **2026-11-19**: Images, Listing, Privacy practices, User Data FAQ, Program Policies and Review process.
 Status: **ready to upload, not submitted.** Submission requires your developer account (one-time registration fee, identity/2-step verification) and is done by you in the Developer Dashboard.
@@ -20,7 +20,7 @@ Status: **ready to upload, not submitted.** Submission requires your developer a
 | Limited Use certification (Policies) | ✅ no transfer, sale, ads or credit use |
 | No "Chrome" trademark in the name, no impersonation (Policies) | ✅ "Tab Volume Mixer" |
 | Manifest name ≤ 75, description ≤ 132 chars | ✅ EN 16/87, PL 21/103 |
-| Package ZIP with manifest at root | ✅ `release/tab-volume-mixer-1.0.0.zip` |
+| Package ZIP with manifest at root | ✅ `release/tab-volume-mixer-1.0.1.zip` |
 
 ## Store listing tab
 * **Name:** Tab Volume Mixer (comes from the manifest; Polish UI: "Mikser głośności kart")

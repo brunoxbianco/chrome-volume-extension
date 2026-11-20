@@ -29,9 +29,14 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
+html { overflow: hidden; } /* stops body overflow from propagating to the viewport: body is the scroller */
 body {
   width: 360px;
   max-height: 560px;
+  /* body is the scroller, so the vertical scrollbar fits inside the 360 px instead of pushing the page
+     sideways (horizontal scrollbar, cut-off values) once many tabs are listed. */
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--bg);
   color: var(--text);
   font: 13px/1.4 system-ui, "Segoe UI", Roboto, sans-serif;
@@ -50,7 +55,8 @@ h1 { font-size: 14px; font-weight: 650; margin: 0; flex: 1; }
 .count { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 
 main { padding: 10px; }
-.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+/* minmax(0, 1fr): long nowrap titles must ellipsize instead of widening the grid column past the popup. */
+.list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 
 .row {
   background: var(--card);

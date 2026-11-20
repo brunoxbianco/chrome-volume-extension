@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-20T11:13:12.974Z",
+  "browser": "Chrome/157.0.8103.78",
+  "results": [
+    {
+      "site": "soundcloud",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "PASS",
+      "detail": "Embed host: w.soundcloud.com | muted=true"
+    },
+    {
+      "site": "soundcloud",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "soundcloud",
+      "name": "media real volume = page volume × 0.30",
+      "status": "SKIP",
+      "detail": "no DOM media element (audio comes from Web Audio or detached Audio)"
+    },
+    {
+      "site": "soundcloud",
+      "name": "0 % → tab becomes inaudible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "soundcloud",
+      "name": "100 % → audible again",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "soundcloud",
+      "name": "level 40 % survives reload",
+      "status": "SKIP",
+      "detail": "no sound after reload"
+    },
+    {
+      "site": "soundcloud",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "soundcloud",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Embed host: w.soundcloud.com"
+    },
+    {
+      "site": "popup",
+      "name": "many tabs: no horizontal overflow, values fully visible",
+      "status": "PASS",
+      "detail": "{\"doc\":0,\"rows\":0,\"scrolls\":false}"
+    }
+  ]
+}

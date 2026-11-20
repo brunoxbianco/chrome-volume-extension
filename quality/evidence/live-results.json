@@ -1,0 +1,312 @@
+{
+  "date": "2026-11-20T11:12:16.348Z",
+  "browser": "Chrome/157.0.8103.78",
+  "results": [
+    {
+      "site": "youtube",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "PASS",
+      "detail": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube | muted=true"
+    },
+    {
+      "site": "youtube",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "youtube",
+      "name": "media real volume = page volume × 0.30",
+      "status": "PASS",
+      "detail": "real 0.300 / page 1.000"
+    },
+    {
+      "site": "youtube",
+      "name": "page still sees its own volume",
+      "status": "PASS",
+      "detail": "1"
+    },
+    {
+      "site": "youtube",
+      "name": "0 % → tab becomes inaudible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "youtube",
+      "name": "100 % → audible again",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "youtube",
+      "name": "media real volume = page volume at 100 %",
+      "status": "PASS",
+      "detail": "real 1.000 / page 1.000"
+    },
+    {
+      "site": "youtube",
+      "name": "level 40 % survives reload",
+      "status": "PASS",
+      "detail": "real 0.400 / page 1.000"
+    },
+    {
+      "site": "youtube",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "youtube",
+      "name": "SPA navigation to another video keeps 40 %",
+      "status": "PASS",
+      "detail": "/watch?v=xOXolSQcEb4 → real 0.400 / page 1.000"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "PASS",
+      "detail": "Embed host: www.youtube-nocookie.com | muted=true"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "media real volume = page volume × 0.30",
+      "status": "PASS",
+      "detail": "real 0.300 / page 1.000"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "page still sees its own volume",
+      "status": "PASS",
+      "detail": "1"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "0 % → tab becomes inaudible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "youtube-embed",
+      "name": "100 % → audible again",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "youtube-embed",
+      "name": "media real volume = page volume at 100 %",
+      "status": "PASS",
+      "detail": "real 1.000 / page 1.000"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "level 40 % survives reload",
+      "status": "PASS",
+      "detail": "real 0.400 / page 1.000"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "vimeo",
+      "name": "plays sound",
+      "status": "SKIP",
+      "detail": "player stuck loading media (readyState 1); not caused by the extension"
+    },
+    {
+      "site": "soundcloud",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "FAIL",
+      "detail": "Embed host: w.soundcloud.com | muted=true"
+    },
+    {
+      "site": "spotify",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "PASS",
+      "detail": "Embed host: open.spotify.com | muted=true"
+    },
+    {
+      "site": "spotify",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "spotify",
+      "name": "media real volume = page volume × 0.30",
+      "status": "SKIP",
+      "detail": "no DOM media element (audio comes from Web Audio or detached Audio)"
+    },
+    {
+      "site": "spotify",
+      "name": "0 % → tab becomes inaudible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "spotify",
+      "name": "100 % → audible again",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "spotify",
+      "name": "level 40 % survives reload",
+      "status": "SKIP",
+      "detail": "no DOM media to measure"
+    },
+    {
+      "site": "spotify",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "tone",
+      "name": "plays sound (tab audible, tab muted for the test)",
+      "status": "PASS",
+      "detail": "Online Tone Generator - generate pure tones of any frequency | muted=true"
+    },
+    {
+      "site": "tone",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "tone",
+      "name": "media real volume = page volume × 0.30",
+      "status": "SKIP",
+      "detail": "no DOM media element (audio comes from Web Audio or detached Audio)"
+    },
+    {
+      "site": "tone",
+      "name": "0 % → tab becomes inaudible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "tone",
+      "name": "100 % → audible again",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "site": "tone",
+      "name": "level 40 % survives reload",
+      "status": "SKIP",
+      "detail": "no DOM media to measure"
+    },
+    {
+      "site": "tone",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "webrtc",
+      "name": "plays (WebRTC stream advancing)",
+      "status": "PASS",
+      "detail": "WebRTC loopback | muted=true"
+    },
+    {
+      "site": "webrtc",
+      "name": "set 30 % accepted",
+      "status": "PASS",
+      "detail": "{\"ok\":true}"
+    },
+    {
+      "site": "webrtc",
+      "name": "media real volume = page volume × 0.30",
+      "status": "PASS",
+      "detail": "real 0.300 / page 1.000"
+    },
+    {
+      "site": "webrtc",
+      "name": "page still sees its own volume",
+      "status": "PASS",
+      "detail": "1"
+    },
+    {
+      "site": "webrtc",
+      "name": "0 % → media real volume 0",
+      "status": "PASS",
+      "detail": "real 0.000 / page 1.000"
+    },
+    {
+      "site": "webrtc",
+      "name": "media real volume = page volume at 100 %",
+      "status": "PASS",
+      "detail": "real 1.000 / page 1.000"
+    },
+    {
+      "site": "webrtc",
+      "name": "level 40 % survives reload",
+      "status": "PASS",
+      "detail": "real 0.400 / page 1.000"
+    },
+    {
+      "site": "webrtc",
+      "name": "badge shows 40 after reload",
+      "status": "PASS",
+      "detail": "40"
+    },
+    {
+      "site": "youtube",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "SNOW BEAR - A Hand-Drawn Animated Short Film (4K) by Aaron Blaise - YouTube"
+    },
+    {
+      "site": "youtube-embed",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Embed host: www.youtube-nocookie.com"
+    },
+    {
+      "site": "vimeo",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Embed host: player.vimeo.com"
+    },
+    {
+      "site": "soundcloud",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Embed host: w.soundcloud.com"
+    },
+    {
+      "site": "spotify",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Embed host: open.spotify.com"
+    },
+    {
+      "site": "tone",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "Online Tone Generator - generate pure tones of any frequency"
+    },
+    {
+      "site": "webrtc",
+      "name": "listed in the popup",
+      "status": "PASS",
+      "detail": "WebRTC loopback"
+    },
+    {
+      "site": "popup",
+      "name": "many tabs: no horizontal overflow, values fully visible",
+      "status": "PASS",
+      "detail": "{\"doc\":0,\"rows\":0,\"scrolls\":true}"
+    }
+  ]
+}

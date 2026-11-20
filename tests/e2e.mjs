@@ -35,6 +35,16 @@ const pages = {
     const g = ctx.createGain(); g.gain.value = 0.002; o.connect(g); g.connect(ctx.destination); o.start();
     window.__ret = g.connect(ctx.destination) === ctx.destination; // chaining contract
   </script>`,
+  // Media elements routed into Web Audio (visualizers, EQ players): must be scaled once, by the GainNode only.
+  '/mes.html': `<!doctype html><title>Fixture MES tab</title><audio id="a" src="/tone.wav" loop autoplay></audio><audio id="b" src="/tone.wav" loop autoplay></audio><script>
+    const ctx = new AudioContext();
+    const an = ctx.createAnalyser();
+    ctx.createMediaElementSource(document.getElementById('a')).connect(an);
+    new MediaElementAudioSourceNode(ctx, { mediaElement: document.getElementById('b') }).connect(ctx.destination);
+    an.connect(ctx.destination);
+    window.__ctorOk = new MediaElementAudioSourceNode(ctx, { mediaElement: new Audio() }) instanceof MediaElementAudioSourceNode;
+  </script>`,
+  '/long.html': `<!doctype html><title>Fixture long title ${'that keeps going and going '.repeat(6)}end</title>`,
   '/silent.html': `<!doctype html><title>Fixture silent tab</title><p>no audio</p>`
 };
 const wav = sineWav();
@@ -81,7 +91,7 @@ try {
   const sw = await swTarget.worker();
 
   // Isolated-world probe: reads the *real* (unpatched) media volume.
-  async function realVolume(page) {
+  async function realVolume(page, selector = 'audio') {
     const cdp = await page.createCDPSession();
     const contexts = [];
     cdp.on('Runtime.executionContextCreated', (e) => contexts.push(e.context));
@@ -89,7 +99,7 @@ try {
     await sleep(200);
     const iso = contexts.find((c) => c.auxData && c.auxData.type === 'isolated' && c.auxData.frameId === page.mainFrame()._id);
     if (!iso) { await cdp.detach(); return null; }
-    const r = await cdp.send('Runtime.evaluate', { contextId: iso.id, expression: "document.querySelector('audio').volume", returnByValue: true });
+    const r = await cdp.send('Runtime.evaluate', { contextId: iso.id, expression: `document.querySelector(${JSON.stringify(selector)}).volume`, returnByValue: true });
     await cdp.detach();
     return r.result.value;
   }
@@ -158,6 +168,22 @@ try {
   const waBack = await waitFor(async () => (await tabInfo('/webaudio.html'))?.audible, 8000);
   check('J2 Web Audio tab back to 100% is audible again', waBack);
 
+  // J2c: <audio> routed through createMediaElementSource / MediaElementAudioSourceNode is scaled once (GainNode),
+  // not twice (element volume × GainNode → level²).
+  const mes = await browser.newPage();
+  await mes.goto(ORIGIN + '/mes.html');
+  check('J2c MediaElementAudioSourceNode constructor still works', await mes.evaluate(() => window.__ctorOk) === true);
+  check('J2c MES tab is audible', await waitFor(async () => (await tabInfo('/mes.html'))?.audible));
+  await popup.bringToFront();
+  await waitFor(() => popup.$$eval('.row .title', (els) => els.some((e) => e.textContent === 'Fixture MES tab')), 5000);
+  await setSlider('Fixture MES tab', 50);
+  const mesA = await realVolume(mes, '#a');
+  const mesB = await realVolume(mes, '#b');
+  check('J2c routed elements keep page volume at 50% (no double scaling)', mesA === 1 && mesB === 1, `a=${mesA} b=${mesB}`);
+  await setSlider('Fixture MES tab', 0);
+  check('J2c MES tab at 0% becomes inaudible (GainNode path)', await waitFor(async () => (await tabInfo('/mes.html'))?.audible === false, 8000));
+  await mes.close();
+
   // J5: idle tab with non-default level stays listed
   const stillListed = await popup.$$eval('.row .title', (els) => els.some((e) => e.textContent === 'Fixture media tab'));
   check('J5 inaudible tab with level ≠ 100% stays in list', stillListed);
@@ -215,6 +241,21 @@ try {
   check('J6 restricted tab listed with disabled slider + hint', sysRow && sysRow.hint, JSON.stringify(sysRow));
   await popup.screenshot({ path: path.join(OUT, 'popup-restricted.png') });
 
+  // UI: a long tab title must ellipsize, not widen the popup (grid column blow-out found on live sites).
+  const long = await browser.newPage();
+  await long.goto(ORIGIN + '/long.html');
+  await sw.evaluate(async (u) => {
+    const t = (await chrome.tabs.query({})).find((x) => x.url && x.url.includes(u));
+    await chrome.tabs.update(t.id, { muted: true }); // muted tabs are listed
+  }, '/long.html');
+  await waitFor(() => popup.$$eval('.row .title', (els) => els.some((e) => e.textContent.startsWith('Fixture long title'))), 5000);
+  const overflow = await popup.evaluate(() => {
+    const W = document.documentElement.clientWidth;
+    return { scroll: document.documentElement.scrollWidth - W, cut: [...document.querySelectorAll('.row .value')].filter((v) => v.getBoundingClientRect().right > W).length };
+  });
+  check('UI long tab title does not widen the popup', overflow.scroll <= 0 && overflow.cut === 0, JSON.stringify(overflow));
+  await long.close();
+
   // J7: keyboard / a11y basics
   const a11y = await popup.evaluate(() => {
     const s = document.querySelector('.row .slider');
@@ -243,16 +284,18 @@ try {
   const media2 = await browser.newPage();
   await media2.goto(ORIGIN + '/media.html');
   await sleep(500);
-  await sw.evaluate(() => { setTimeout(() => chrome.runtime.reload(), 50); }).catch(() => {});
-  await sleep(1500);
-  const sw2Target = await browser.waitForTarget((t) => t !== swTarget && t.type() === 'service_worker' && t.url().endsWith('/background.js'), { timeout: 10000 });
-  const sw2 = await sw2Target.worker();
-  const id2 = await sw2.evaluate(async (u) => (await chrome.tabs.query({})).find((x) => x.url && x.url.includes(u)).id, '/media.html');
+  // chrome.runtime.reload() no longer brings back a CDP-loaded unpacked extension (Helium 157), so simulate
+  // the update by uninstalling and loading it again (same path → same extension ID).
+  await browser.uninstallExtension(extId);
+  const extId2 = await browser.installExtension(EXT);
+  check('Lifecycle: extension re-installed with the same ID', extId2 === extId, extId2);
+  check('Lifecycle: old extension pages were closed', await waitFor(() => popup.isClosed() || popup.evaluate(() => false).catch(() => true), 5000));
   const popup2 = await browser.newPage();
   await popup2.goto(`chrome-extension://${extId}/popup/popup.html`);
+  const id2 = await popup2.evaluate(async (u) => (await chrome.tabs.query({})).find((x) => x.url && x.url.includes(u)).id, '/media.html');
   const res2 = await popup2.evaluate((id) => chrome.runtime.sendMessage({ type: 'tvm:set', tabId: id, level: 0.25 }), id2);
   const v25 = await realVolume(media2);
-  check('Lifecycle: after extension reload, open tab is re-injected and set to 0.25', res2 && res2.ok && Math.abs(v25 - 0.25) < 0.01, `${JSON.stringify(res2)} real=${v25}`);
+  check('Lifecycle: after extension update, open tab is re-injected and set to 0.25', res2 && res2.ok && Math.abs(v25 - 0.25) < 0.01, `${JSON.stringify(res2)} real=${v25}`);
 } catch (err) {
   check('unexpected error', false, err.stack);
 } finally {
